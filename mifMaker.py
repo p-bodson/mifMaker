@@ -9,30 +9,6 @@ def summarize(photo):
    print(f'width (horizontal/column) of image = {photo.shape[1]}')
    print(f'number of {photo.dtype} per pixel of image = {photo.shape[2]}')
 
-def print_row_4_u4(photo, row):
-   coord = [None,None,None,None] 
-   for value in range(photo.shape[1]):
-      for num in range(photo.shape[2]): 
-         coord[num] = photo[row][value][num]
-      print(f'{row:x}-{value:x}: {coord[0]:x} {coord[1]:x} {coord[2]:x} {coord[3]:x}')
-
-def print_row_3_u4(photo, row):
-   coord = [None,None,None] 
-   for value in range(photo.shape[1]):
-      for num in range(photo.shape[2]): 
-         coord[num] = photo[row][value][num]
-      print(f'{row:x}-{value:x}: {coord[0]:x} {coord[1]:x} {coord[2]:x}')
-
-def print_row_4_float(photo, row):
-   coord = [None,None,None,None] 
-   for value in range(photo.shape[1]):
-      for num in range(photo.shape[2]): 
-         coord[num] = photo[row][value][num]
-      print(f'{row:}-{value:}: {coord[0]} {coord[1]} {coord[2]} {coord[3]}')
-
-def round_off(photo):
-   return (photo*255).astype(np.uint8)
-
 def float_to_u4(photo):
    return  (photo*15).astype(np.uint8)
 
@@ -42,32 +18,41 @@ def u8_to_u4(photo):
 def u4_to_u8(photo):
    return (photo*17).round().astype(np.uint8)
 
+# TODO add exception catching for bad types 
+def create_u4(photo):
+   if photo.dtype == "float32":
+      return float_to_u4(photo)
+   elif photo.dtype == "uint8":
+      return u8_to_u4(photo)
+   else:
+      return None 
 
 #img = input('Enter name of image in current directory: ')
+
 # load image as pixel array
-data = image.imread('images/knight_4.png')
-# summarize shape of the pixel array
+data = image.imread('../morph2.png')
 
+# summarize shape of current pixel array
+print('\n' + f'CURRENT PHOTO:' + '\n')
+summarize(data)
 
-#summarize(data)
+# convert pixel array to (M,N,4) shape for 16bit RGBA)
 
-float_data = float_to_u4(data)
-#u4_data = u8_to_u4(data)
-u8_data = u4_to_u8(float_data)
-#rounded_data = round_off(data)
+u4_data = create_u4(data)
+u8_data = u4_to_u8(u4_data)
 
-summarize(float_data)
+print('\n' + f'NEW PHOTO:' + '\n')
+summarize(u4_data)
+
+# save converted image for preview through FPGA 
+
+# TODO: ask for preview image file name
+#plt.imsave('images/knight_4_edit.png', u8_data)
+
 '''
-#print_row_4_u4(float_data, 100)
-#print_row_4_u4(u4_data, 100)
-#print_row_4_u4(u8_data,100)
-#print_row_4_float(rounded_data, 100)
-print_row_4_float(data, 100)
-print_row_4_float(float_data, 100)
-print_row_4_float(float_data*17,100)
-print_row_4_u4(u8_data,100)
+Here on converts the (M,N,4) np.array into a mif 
 '''
-#print_row_4_u4(u8_data,100)
+
 
 def form_pixel(photo, row, col):
    return (f'{photo[row][col][0]:x}{photo[row][col][1]:x}{photo[row][col][2]:x}{photo[row][col][3]:x}')
@@ -88,7 +73,7 @@ def form_u4_data(photo):
          data.append( (f'{form_address(photo, current_row, current_col)}: {form_pixel(photo,current_row, current_col)}') )
    return data
 
-def form_mif_header(depth=64,width=12,addr_radix='HEX',data_radix='HEX'):
+def form_mif_header(depth=64,width=16,addr_radix='HEX',data_radix='HEX'):
    
    header = [
    f'DEPTH = {depth}',
@@ -114,9 +99,7 @@ def form_mif(photo):
 
    return mif
 
-
-
-def write_mif(photo, mode='x', file='mifs/mifData.mif'):
+def write_mif(photo, mode='x', file='mifData.mif'):
    '''
    this writes out the mif
    '''
@@ -124,18 +107,12 @@ def write_mif(photo, mode='x', file='mifs/mifData.mif'):
    f.write(form_mif(photo))
    f.close()
 
-write_mif(float_data, 'w')
-
-
-
+write_mif(u4_data, 'w')
 
 # display the array of pixels as an image
 
-#plt.imshow(data)
-#plt.show()
-
-
-#plt.imshow(u8_data)
-#plt.show()
-#plt.imsave('images/knight_4_edit.png', u8_data)
+plt.imshow(data)
+plt.show()
+plt.imshow(u8_data)
+plt.show()
 
