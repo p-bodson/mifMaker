@@ -28,8 +28,11 @@ After this program is cloned follow these step inside the same directory as *mif
 
 1. Place the image you want to convert into the same directory as mifMaker.py.
 2. Run the chmod command to ensure that mifMaker.py is executable
+
          chmod 744 mifMaker.py
-3. Run the script with 
+
+3. Run the script with
+
          python3 mifMaker.py
 
 *Replace python3 with whatever command is used to instantiate a python3 REPL.  Many systems use "python" for python 2, and "python3" for python 3.*
