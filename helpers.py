@@ -4,7 +4,7 @@ import numpy as np
 
 def summarize(photo, title='DATA:'):
     print('\n' + f'{title}' + '\n')
-    print(f'array: {photo}') 
+    #print(f'array: {photo}') 
     print(f'data type = {photo.dtype}')
     print(f'data shape = {photo.shape}')
     print(f'data size = {photo.size}')
@@ -14,7 +14,7 @@ def summarize(photo, title='DATA:'):
     #print(f'number of {photo.dtype} per pixel of image = {photo.shape[2]}') # does not work for luminance photos
 
 def float_to_u8(photo):
-   return  (photo*255).astype(np.uint8)
+   return  (photo*255).round().astype(np.uint8)
 
 def u4_to_u8(photo):
    return (photo*17).round().astype(np.uint8)
@@ -108,7 +108,7 @@ def form_mif(photo):
    '''
    This takes the numpy.ndarray and creates the mif
    '''
-
+   
    mif_str_arr = form_mif_header(photo.size, photo.shape[2]*4) + form_mif_content(photo)
    mif = '\n'.join(mif_str_arr)
 
