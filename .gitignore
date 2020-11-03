@@ -11,3 +11,4 @@
 /.vscode/
 /mifs/
 /mifData.mif
+/__pycache__/
