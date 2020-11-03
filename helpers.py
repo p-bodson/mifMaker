@@ -13,23 +13,14 @@ def summarize(photo, title='DATA:'):
     print(f'width (horizontal/column) of image = {photo.shape[1]}')
     #print(f'number of {photo.dtype} per pixel of image = {photo.shape[2]}') # does not work for luminance photos
 
-def float_to_u8(photo):
-   return  (photo*255).round().astype(np.uint8)
-
-def u4_to_u8(photo):
-   return (photo*17).round().astype(np.uint8)
-
-def solid_layer(photo, value = 255):
-    initial_layer = np.zeros((photo.shape[0],photo.shape[1],1), dtype=photo.dtype)
-    return initial_layer + value
-
-def rgb_to_rgba(photo):
-    alpha_channel = solid_layer(photo)
-    return np.concatenate((photo,alpha_channel), axis=2)
-
 # TODO how to handle exceptions
 # TODO make adding the alpha channel optional
 def resize(photo):
+   # convert 3-channel rgb to 4-channel rgba
+   def rgb_to_rgba(photo, value=255):
+      alpha_channel = np.zeros((photo.shape[0],photo.shape[1],1), dtype=photo.dtype) + value
+      return np.concatenate((photo,alpha_channel), axis=2)
+
    if len(photo.shape) < 3:
         print(f'''I don't know how to handle luminance data''')
         return None
@@ -44,26 +35,26 @@ def prepare_data(photo):
     makes the data uint8 for use in creating the 'uint4' data
     '''
     if photo.dtype == "float32":
-        return float_to_u8(photo)
+         # map float to 0 to 255 as uint8 type
+         return (photo*255).round().astype(np.uint8)
     elif photo.dtype == "uint8":
-        return photo
+         return photo
     else:
-        print(f'''I don't know how to handle this number type''') 
-        return None
+         print(f'''I don't know how to handle this number type''') 
+         return None
 
 # TODO add exception catching for bad types 
 def create_u4(photo):
-    data = resize(photo)
-# expects uint8 input data with
-    return (data/17).round().astype(np.uint8)
+   prep_data = prepare_data(photo)
+   data = resize(prep_data)
+   return (data/17).round().astype(np.uint8)
 
 
 # TODO create deafault name for empty input
 def create_preview(photo):
-    uint8_data = u4_to_u8(photo)
+    uint8_data = (photo*17).round().astype(np.uint8)
     preview = input('Enter name of preview image relative to current directory: ')
     plt.imsave(preview, uint8_data)
-
 
 
 # TODO add mif compression
