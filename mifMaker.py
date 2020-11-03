@@ -5,6 +5,7 @@ import numpy as np
 def summarize(photo):
    print(f'data type = {photo.dtype}')
    print(f'data shape = {photo.shape}')
+   print(f'data dimension = {photo.ndim}')
    print(f'height (vertical/row) of image = {photo.shape[0]}')
    print(f'width (horizontal/column) of image = {photo.shape[1]}')
    print(f'number of {photo.dtype} per pixel of image = {photo.shape[2]}')
@@ -25,29 +26,44 @@ def create_u4(photo):
    elif photo.dtype == "uint8":
       return u8_to_u4(photo)
    else:
-      return None 
+      print(f'data type for array unknown: using null array') 
+      return np.array() 
 
-#img = input('Enter name of image in current directory: ')
+def d2_to_d3(photo):
+   return None
+
+def rgb_to_rgba(photo):
+   return None
+
+def remake_size(photo):
+   if len(photo.shape) < 3:
+     return d2_to_d3(photo)
+   elif photo.shape[2] == 3:
+      return rgb_to_rgba(photo)
+   else:
+      return photo
 
 # load image as pixel array
-data = image.imread('../morph2.png')
+img = input('Enter name of image relative to current directory: ')
+data = image.imread(img)
 
 # summarize shape of current pixel array
 print('\n' + f'CURRENT PHOTO:' + '\n')
 summarize(data)
 
-# convert pixel array to (M,N,4) shape for 16bit RGBA)
+# make array into appropriate size for next steps
+d4_data = remake_size(data)
 
-u4_data = create_u4(data)
+# convert pixel array to (M,N,4) shape for 16bit RGBA)
+u4_data = create_u4(d4_data)
 u8_data = u4_to_u8(u4_data)
 
 print('\n' + f'NEW PHOTO:' + '\n')
 summarize(u4_data)
 
 # save converted image for preview through FPGA 
-
-# TODO: ask for preview image file name
-#plt.imsave('images/knight_4_edit.png', u8_data)
+#preview = input('Enter name of preview image relative to current directory: ')
+#plt.imsave(preview, u8_data)
 
 '''
 Here on converts the (M,N,4) np.array into a mif 
