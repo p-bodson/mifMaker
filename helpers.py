@@ -109,7 +109,7 @@ def form_mif(photo):
    This takes the numpy.ndarray and creates the mif
    '''
    
-   mif_str_arr = form_mif_header(photo.size, photo.shape[2]*4) + form_mif_content(photo)
+   mif_str_arr = form_mif_header(photo.shape[0]*photo.shape[1], photo.shape[2]*4) + form_mif_content(photo)
    mif = '\n'.join(mif_str_arr)
 
    return mif
