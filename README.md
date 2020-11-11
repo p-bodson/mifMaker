@@ -10,6 +10,8 @@ Each pixel in the mif will be 16 bits wide to represent 4 bits per pixel in RGBA
 
 When using the mif for VGA output, simply ignore the alpha channel (the last 4 bits of the 16-bit pixel) if it is not used.
 
+**Attention:** The output of the program is limited to 256x256 pixels to ensure a maximum of 65536 words, which is the maximum size of a ROM block using the Quartus II Prime ROM creation tool.  Any dimensions of an image larger that 256 pixels will be cropped to 256.
+
 ## Installation
 
 If you've already cloned this repository into a directory, nice job. Otherwise, to clone this repository, simply change into the directory where you want the repository to exist, make sure git is installed, and type
