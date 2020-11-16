@@ -16,7 +16,7 @@ When using the mif for VGA output, simply ignore the alpha channel (the last 4 b
 
 If you've already cloned this repository into a directory, nice job. Otherwise, to clone this repository, simply change into the directory where you want the repository to exist, make sure git is installed, and type
 
-    git clone git@github.com:p-bodson/mifMaker.git 
+    git clone https://github.com/p-bodson/mifMaker.git 
 
 A folder named mifMaker should appear which contains the relevant scripts.
 
