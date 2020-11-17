@@ -103,23 +103,23 @@ def form_u4_data(photo):
 
    for current_row in range(row):
       for current_col in range(col):
-         data.append( (f'{form_address(photo, current_row, current_col)}: {form_pixel(photo,current_row, current_col)}') )
+         data.append( (f'{form_address(photo, current_row, current_col)}: {form_pixel(photo,current_row, current_col)};') )
    return data
 
 def form_mif_header(depth=64,width=16,addr_radix='HEX',data_radix='HEX'):
    
    header = [
-   f'DEPTH = {depth}',
-   f'WIDTH = {width}',
+   f'DEPTH = {depth};',
+   f'WIDTH = {width};',
    f'',
-   f'ADDRESS_RADIX = {addr_radix}',
-   f'DATA_RADIX = {data_radix}',
+   f'ADDRESS_RADIX = {addr_radix};',
+   f'DATA_RADIX = {data_radix};',
    f''
    ]
    return header
 
 def form_mif_content(photo):
-   content = [f'CONTENT', f'BEGIN'] + form_u4_data(photo) + [f'END']
+   content = [f'CONTENT', f'BEGIN'] + form_u4_data(photo) + [f'END;']
    return content
 
 def form_mif(photo):
