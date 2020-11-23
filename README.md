@@ -14,6 +14,8 @@ When using the mif for VGA output, simply ignore the alpha channel (the last 4 b
 
 ## Installation
 
+> *If you would like to see a video explaining how to use this program, see the Tutorials posted on the ECE 272 Lab page https://eecs.oregonstate.edu/tekbots/courses/ece272*
+
 If you've already cloned this repository into a directory, nice job. Otherwise, to clone this repository, simply change into the directory where you want the repository to exist, make sure git is installed, and type
 
     git clone https://github.com/p-bodson/mifMaker.git 
@@ -29,7 +31,7 @@ If you want, you may put this program in a python virtual environment and instal
 After this program is cloned follow these step inside the same directory as *mifMaker.py*:
 
 1. Place the image you want to convert into the same directory as mifMaker.py.
-2. Run the chmod command to ensure that mifMaker.py is executable
+2. Run the chmod command to ensure that mifMaker.py is executable (if it is not already executable)
 
          chmod 744 mifMaker.py
 
@@ -49,6 +51,4 @@ After this program is cloned follow these step inside the same directory as *mif
 
 > This means writing *my_preview_image.png* instead of *my_preview_image*
 
-- The mif will be saved as mifData.mif in the same directory as mifMaker.py.  If you run the program again, **the data will be overwritten** 
-
-- Remember that the resolution through VGA is limited, make sure that the image being converted to mif is small enough to fit on a VGA screen
+- The mif will be saved as mifData.mif in the same directory as mifMaker.py. If you run the program again, **the data will be overwritten** 
