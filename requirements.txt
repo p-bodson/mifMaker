@@ -1,0 +1,6 @@
+# List of modules to download. Add new modules here with version number of 
+# working modules, feel free to update versions after new version is tested. 
+# New unique modules must be in a try/except block, see mifMaker.py for example.
+# You can find the version with $pip3 list
+matplotlib==3.3.3
+numpy==1.19.4

@@ -1,5 +1,11 @@
-from matplotlib import image
-import numpy as np
+try:
+    from matplotlib import image
+    import numpy as np
+except:
+    os.system('pip3 install -r requirements.txt')
+    from matplotlib import image
+    import numpy as np
+
 from helpers import summarize, create_u4, create_preview, write_mif
 
 # load image as pixel array
