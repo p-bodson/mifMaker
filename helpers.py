@@ -1,3 +1,5 @@
+#TODO add conversion to .hex as option
+
 from matplotlib import pyplot as plt
 import numpy as np
 
