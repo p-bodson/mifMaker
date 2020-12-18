@@ -1,6 +1,7 @@
 from matplotlib import pyplot as plt
 import numpy as np
 
+#TODO add default names
 
 def summarize(photo, title='DATA:'):
     print('\n' + f'{title}' + '\n')
@@ -77,22 +78,18 @@ def create_u4(photo):
    return (data/17).round().astype(np.uint8)
 
 
-# TODO create deafault name for empty input
+# TODO create default name for empty input
 def create_preview(photo):
     uint8_data = (photo*17).round().astype(np.uint8)
     preview = input('Enter name of preview image relative to current directory: ')
     plt.imsave(preview, uint8_data)
 
-
-# TODO add mif compression
-# TODO make the mif generation quicker (compression should help)
-
 def form_pixel(photo, row, col):
-   return (f'{photo[row][col][0]:x}{photo[row][col][1]:x}{photo[row][col][2]:x}{photo[row][col][3]:x}')
+   return (f'{photo[row][col][0]:x}{photo[row][col][1]:x}{photo[row][col][2]:x}{photo[row][col][3]:x}'.upper())
 
 def form_address(photo, row, col):
    address = row * photo.shape[1] + col
-   return (f'{address:x}')
+   return (f'{address:04x}'.upper())
 
 def form_u4_data(photo):
    row = photo.shape[0]
@@ -105,6 +102,9 @@ def form_u4_data(photo):
       for current_col in range(col):
          data.append( (f'{form_address(photo, current_row, current_col)}: {form_pixel(photo,current_row, current_col)}') )
    return data
+
+
+#### Intel memory initialization file format section
 
 def form_mif_header(depth=64,width=16,addr_radix='HEX',data_radix='HEX'):
    
@@ -132,7 +132,7 @@ def form_mif(photo):
 
    return mif
 
-# TODO ask for filname for mif data
+# TODO ask for filename for mif data
 def write_mif(photo, mode='x', file='mifData.mif'):
    '''
    this writes out the mif
@@ -140,4 +140,63 @@ def write_mif(photo, mode='x', file='mifData.mif'):
 
    f = open(file, mode)
    f.write(form_mif(photo))
+   f.close()
+
+###### Intel Hex file format sectiion
+
+def form_hex_checksum(photo, row, col):
+   num_bytes = 2
+
+   address = row * photo.shape[1] + col
+   addr_second_byte = address % 256 
+   addr_first_byte = int((address - addr_second_byte) / 256 )
+
+   data = photo[row][col][0] + photo[row][col][1] + photo[row][col][2] + photo[row][col][3]
+
+   sum = num_bytes + addr_first_byte + addr_second_byte + data
+   checksum = -sum % 256 
+
+   return (f'{checksum:x}'.upper())
+
+def form_hex_content(photo, row, col):
+   content = ( 
+      f':02'
+      f'{form_address(photo, row, col)}'
+      f'00'
+      f'{form_pixel(photo, row, col)}'
+      f'{form_hex_checksum(photo, row, col)}'
+   )
+   return content
+
+
+def form_u4_data_hex(photo):
+   row = photo.shape[0]
+   col = photo.shape[1]
+   width = photo.shape[2]
+
+   data = []
+
+   for current_row in range(row):
+      for current_col in range(col):
+         data.append(form_hex_content(photo, current_row, current_col))
+   return data
+
+def form_hex(photo):
+   '''
+   This takes the numpy.ndarray and creates the hex file
+   '''
+   
+   hex_str_arr = form_u4_data_hex(photo)
+   hex_data = '\n'.join(hex_str_arr)
+
+   return hex_data
+
+# TODO ask for filname for hex data
+def write_hex(photo, mode='x', file='hexData.hex'):
+   '''
+   this writes out the hex
+   '''
+
+   f = open(file, mode)
+   f.write(form_hex(photo))
    f.close()

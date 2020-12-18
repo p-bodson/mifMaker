@@ -1,6 +1,6 @@
 from matplotlib import image
 import numpy as np
-from helpers import summarize, create_u4, create_preview, write_mif
+from helpers import summarize, create_u4, create_preview, write_mif, write_hex
 
 # load image as pixel array
 img = input('Enter name of image relative to current directory: ')
@@ -17,3 +17,4 @@ create_preview(uint4_data)
 
 # save the data for the mif
 write_mif(uint4_data, 'w')
+write_hex(uint4_data, 'w')
