@@ -1,5 +1,6 @@
 from matplotlib import pyplot as plt
 import numpy as np
+from pathlib import Path
 
 #TODO add default names
 
@@ -79,10 +80,10 @@ def create_u4(photo):
 
 
 # TODO create default name for empty input
-def create_preview(photo):
-    uint8_data = (photo*17).round().astype(np.uint8)
-    preview = input('Enter name of preview image relative to current directory: ')
-    plt.imsave(preview, uint8_data)
+def create_preview(photo, basedir=""):
+   uint8_data = (photo*17).round().astype(np.uint8)
+   preview = basedir.joinpath("preview.png")
+   plt.imsave(preview, uint8_data)
 
 def form_pixel(photo, row, col):
    return (f'{photo[row][col][0]:x}{photo[row][col][1]:x}{photo[row][col][2]:x}{photo[row][col][3]:x}'.upper())
@@ -133,14 +134,12 @@ def form_mif(photo):
    return mif
 
 # TODO ask for filename for mif data
-def write_mif(photo, mode='x', file='mifData.mif'):
+def write_mif(photo, mode='x', file='mifData.mif', basedir=""):
    '''
    this writes out the mif
    '''
-
-   f = open(file, mode)
-   f.write(form_mif(photo))
-   f.close()
+   with open(basedir.joinpath(file), mode) as f:
+      f.write(form_mif(photo))
 
 ###### Intel Hex file format sectiion
 
@@ -192,11 +191,10 @@ def form_hex(photo):
    return hex_data
 
 # TODO ask for filname for hex data
-def write_hex(photo, mode='x', file='hexData.hex'):
+def write_hex(photo, mode='x', file='hexData.hex', basedir=""):
    '''
    this writes out the hex
    '''
 
-   f = open(file, mode)
-   f.write(form_hex(photo))
-   f.close()
+   with open(basedir.joinpath(file), mode) as f:
+      f.write(form_hex(photo))
