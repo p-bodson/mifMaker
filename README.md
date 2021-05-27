@@ -14,11 +14,13 @@ When using the mif for VGA output, simply ignore the alpha channel (the last 4 b
 
 ## Installation
 
-> *If you would like to see a video explaining how to use this program, see the Tutorials posted on the ECE 272 Lab page https://eecs.oregonstate.edu/tekbots/courses/ece272*
+See the Tutorials posted on the ECE 272 Lab page https://eecs.oregonstate.edu/tekbots/courses/ece272 for a video on installing and using this program.  It utilizes the OSU engineering servers and will most likley be the **easiest method** for OSU students in ECE 272.
 
 > **Important** If you are an Oregon State University student following these instructions, and you have never accessed the school servers before, visit https://teach.engr.oregonstate.edu to active your engineering resources.
 
-If you've already cloned this repository into a directory, nice job. Otherwise, to clone this repository, simply change into the directory where you want the repository to exist, make sure git is installed, and type
+The other installation method involves putting the script onto onto ones local machine.  This can be more difficult if one does not have experience with Python in general.
+
+To install on a local machine, clone this repository by using a terminal as found on Linux or Mac, or using something like PuTTY on Windows.  Simply move into the directory where you want the repository to exist (make sure git is installed) and type
 
     git clone https://github.com/p-bodson/mifMaker.git 
 
