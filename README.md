@@ -6,7 +6,7 @@ This is a program to create an Intel Memory Initialization File (mif) containing
 
 The program accepts .jpg , .png , and .bmp files.
 
-Each pixel in the mif will be 16 bits wide to represent 4 bits per pixel in RGBA color, regardless of whether the input image was in RGBA or not.
+Each pixel in the mif will be 16 bits wide to represent 4 bits per channel in RGBA color, regardless of whether the input image was in RGBA or not.
 
 When using the mif for VGA output, simply ignore the alpha channel (the last 4 bits of the 16-bit pixel) if it is not used.
 
@@ -16,7 +16,7 @@ When using the mif for VGA output, simply ignore the alpha channel (the last 4 b
 
 > *If you would like to see a video explaining how to use this program, see the Tutorials posted on the ECE 272 Lab page https://eecs.oregonstate.edu/tekbots/courses/ece272*
 
-> **IMPORTANT** If you are an Oregon State University student following these instructions, and you have never accessed the school servers before, visit https://teach.engr.oregonstate.edu to active your engineering resources.
+> **Important** If you are an Oregon State University student following these instructions, and you have never accessed the school servers before, visit https://teach.engr.oregonstate.edu to active your engineering resources.
 
 If you've already cloned this repository into a directory, nice job. Otherwise, to clone this repository, simply change into the directory where you want the repository to exist, make sure git is installed, and type
 
