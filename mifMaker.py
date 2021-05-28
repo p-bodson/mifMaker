@@ -1,3 +1,4 @@
+import os
 try:
     from matplotlib import image
     import numpy as np
