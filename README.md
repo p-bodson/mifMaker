@@ -14,7 +14,7 @@ When using the mif for VGA output, simply ignore the alpha channel (the last 4 b
 
 ## Installation
 
-See the Tutorials posted on the ECE 272 Lab page https://eecs.oregonstate.edu/tekbots/courses/ece272 for a video on installing and using this program.  It utilizes the OSU engineering servers and will most likley be the **easiest method** for OSU students in ECE 272.
+See the Tutorials posted on the [ECE 272 Lab page](https://docs.google.com/document/d/e/2PACX-1vQgRUYhqwBTtu-RXySXF74qoraWp_5NaCxOG1bNBnk1pU2M0Z6woVH5AgXIJI7D3qL97Tg0Zc2Em2yM/pub) for a video on installing and using this program.  It utilizes the OSU engineering servers and will most likley be the **easiest method** for OSU students in ECE 272.
 
 > **Important** If you are an Oregon State University student following these instructions, and you have never accessed the school servers before, visit https://teach.engr.oregonstate.edu to active your engineering resources.
 
